@@ -1,65 +1,166 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2, Heart, Scale, Sparkles } from "lucide-react";
+import { HeroSection } from "@/components/sections/hero-section";
+import { CTASection } from "@/components/sections/cta-section";
+import { ServiceCard } from "@/components/sections/service-card";
+import { TestimonialCarousel } from "@/components/sections/testimonial-carousel";
+import { BeforeAfterGallery } from "@/components/sections/before-after-gallery";
+import { LeadForm } from "@/components/forms/lead-form";
+import { FadeIn } from "@/components/motion/fade-in";
+import { Button } from "@/components/ui/button";
+import { services } from "@/content/services";
+import { testimonials } from "@/content/testimonials";
+import { beforeAfterCases } from "@/content/before-after";
+import { images } from "@/utils/images";
 
-export default function Home() {
+const benefits = [
+  {
+    icon: Heart,
+    title: "Mejora tu salud",
+    description: "Reduce diabetes, hipertensión y otras comorbilidades asociadas a la obesidad.",
+  },
+  {
+    icon: Scale,
+    title: "Pérdida de peso sostenida",
+    description: "Resultados comprobados con seguimiento médico y nutricional personalizado.",
+  },
+  {
+    icon: Sparkles,
+    title: "Calidad de vida",
+    description: "Recupera movilidad, energía y confianza para disfrutar plenamente tu vida.",
+  },
+];
+
+const galleryCases = beforeAfterCases.map((c) => ({
+  ...c,
+  beforeImage: images.beforeAfter.before,
+  afterImage: images.beforeAfter.after,
+}));
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      <HeroSection />
+
+      {/* Servicios destacados */}
+      <section className="py-16 sm:py-24" aria-labelledby="servicios-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center">
+            <h2 id="servicios-heading" className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Nuestros Servicios
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Procedimientos bariátricos de vanguardia con técnicas mínimamente invasivas y resultados comprobados.
+            </p>
+          </FadeIn>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((service, i) => (
+              <ServiceCard key={service.slug} service={service} index={i} />
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button
+              render={<Link href="/servicios" />}
+              nativeButton={false}
+              variant="outline"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Ver todos los servicios
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Beneficios */}
+      <section className="bg-muted/30 py-16 sm:py-24" aria-labelledby="beneficios-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center">
+            <h2 id="beneficios-heading" className="text-3xl font-bold tracking-tight sm:text-4xl">
+              ¿Por qué elegirnos?
+            </h2>
+          </FadeIn>
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {benefits.map((benefit, i) => (
+              <FadeIn key={benefit.title} delay={i * 0.1}>
+                <div className="rounded-2xl border border-border/60 bg-white p-8 text-center shadow-sm">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <benefit.icon className="h-7 w-7" aria-hidden />
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold">{benefit.title}</h3>
+                  <p className="mt-2 text-muted-foreground">{benefit.description}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Antes y después */}
+      <section className="py-16 sm:py-24" aria-labelledby="resultados-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center">
+            <h2 id="resultados-heading" className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Resultados Reales
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Historias de transformación de nuestros pacientes. Resultados individuales pueden variar.
+            </p>
+          </FadeIn>
+          <div className="mt-12">
+            <BeforeAfterGallery cases={galleryCases} />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonios */}
+      <section className="bg-muted/30 py-16 sm:py-24" aria-labelledby="testimonios-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center">
+            <h2 id="testimonios-heading" className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Lo que dicen nuestros pacientes
+            </h2>
+          </FadeIn>
+          <div className="mt-12">
+            <TestimonialCarousel testimonials={testimonials} />
+          </div>
+        </div>
+      </section>
+
+      {/* Formulario leads */}
+      <section className="py-16 sm:py-24" aria-labelledby="consulta-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <FadeIn>
+              <h2 id="consulta-heading" className="text-3xl font-bold tracking-tight sm:text-4xl">
+                Solicita tu consulta gratuita
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                Completa el formulario y nuestro equipo se comunicará contigo en menos de 24 horas para agendar tu valoración.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {[
+                  "Evaluación médica personalizada",
+                  "Sin compromiso",
+                  "Respuesta en 24 horas",
+                  "Atención confidencial",
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm">
+                    <CheckCircle2 className="h-5 w-5 text-primary shrink-0" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </FadeIn>
+            <FadeIn delay={0.2}>
+              <div className="rounded-2xl border border-border/60 bg-white p-6 shadow-sm sm:p-8">
+                <LeadForm />
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      <CTASection />
+    </>
   );
 }

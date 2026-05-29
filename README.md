@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Plataforma Web — Cirugía Bariátrica
 
-## Getting Started
+Sitio web médico premium para consultorio de cirugía bariátrica. Construido con Next.js, TypeScript, TailwindCSS, Shadcn/ui, Supabase y Framer Motion.
 
-First, run the development server:
+## Stack
+
+- **Next.js** (App Router) + TypeScript
+- **TailwindCSS v4** + Shadcn/ui
+- **Framer Motion** — animaciones sutiles
+- **Supabase** — PostgreSQL (leads, contactos, blog)
+- **React Hook Form** + **Zod** — formularios validados
+- **Server Actions** — envío seguro de datos
+- **Vercel** — despliegue listo
+
+## Inicio rápido
 
 ```bash
+# Instalar dependencias
+npm install
+
+# Copiar variables de entorno
+cp .env.example .env.local
+
+# Desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables de entorno
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copia `.env.example` a `.env.local` y configura:
 
-## Learn More
+| Variable | Descripción |
+|----------|-------------|
+| `NEXT_PUBLIC_SITE_URL` | URL del sitio en producción |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Número WhatsApp (sin +) |
+| `NEXT_PUBLIC_CALENDAR_URL` | URL embed Cal.com / Calendly |
+| `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Anon key de Supabase |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role (solo servidor) |
 
-To learn more about Next.js, take a look at the following resources:
+> Sin Supabase configurado, los formularios funcionan en modo demo (log en consola).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Supabase
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Crea un proyecto en [supabase.com](https://supabase.com)
+2. Ejecuta el SQL en `supabase/migrations/001_initial_schema.sql` desde el SQL Editor
+3. Agrega las credenciales en `.env.local`
 
-## Deploy on Vercel
+## Estructura
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+├── app/              # Páginas y Server Actions
+├── components/       # UI, layout, forms, sections
+├── content/          # Datos estáticos (servicios, blog, doctor)
+├── lib/              # Config, SEO, Supabase, validaciones
+├── types/            # Tipos TypeScript
+└── utils/            # Utilidades (imágenes placeholder)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Páginas
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Home con hero, servicios, testimonios, leads |
+| `/sobre-el-doctor` | Biografía, certificaciones, video |
+| `/servicios` | Listado de procedimientos |
+| `/servicios/[slug]` | Detalle por procedimiento |
+| `/blog` | Artículos médicos |
+| `/blog/[slug]` | Artículo individual |
+| `/contacto` | Formulario, mapa, horarios |
+| `/agendamiento` | Calendario embebido |
+
+## Deploy en Vercel
+
+1. Sube el repo a GitHub
+2. Importa en [vercel.com](https://vercel.com)
+3. Agrega las variables de entorno
+4. Deploy automático en cada push
+
+## Personalización
+
+- **Contenido médico**: edita `src/content/`
+- **Datos del consultorio**: `src/lib/site-config.ts`
+- **Imágenes reales**: reemplaza URLs en `src/utils/images.ts` o agrega archivos en `public/images/`
+- **Colores**: variables CSS en `src/app/globals.css`
+
+## Scripts
+
+```bash
+npm run dev      # Desarrollo
+npm run build    # Build producción
+npm run start    # Servidor producción
+npm run lint     # ESLint
+```
