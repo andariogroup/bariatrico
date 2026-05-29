@@ -29,12 +29,12 @@ export function Navbar() {
       >
         <Link
           href="/"
-          className="flex items-center gap-2 font-heading text-lg font-bold text-primary"
+          className="flex items-center gap-2 font-heading font-bold text-primary"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-sm text-primary-foreground">
+          <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-primary text-xs sm:text-sm text-primary-foreground shrink-0">
             BM
           </span>
-          <span className="hidden sm:block">{siteConfig.name.split(/[-—]/)[0].trim()}</span>
+          <span className="text-sm sm:text-lg line-clamp-1 max-w-[120px] sm:max-w-none">{siteConfig.name.split(/[-—]/)[0].trim()}</span>
         </Link>
 
         <ul className="hidden items-center gap-1 lg:flex">
